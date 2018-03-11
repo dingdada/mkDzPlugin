@@ -1,0 +1,7 @@
+.DS_Store
+template/fe/node_modules/
+template/fe/dist/
+npm-debug.log*
+
+.idea
+.vscode
