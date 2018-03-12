@@ -2,6 +2,7 @@
 template/fe/node_modules/
 template/fe/dist/
 npm-debug.log*
+node_modules
 
 .idea
 .vscode

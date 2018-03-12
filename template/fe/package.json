@@ -1,7 +1,7 @@
 {
-  "name": "mkdzplugin",
+  "name": "mkdzplugin-fe",
   "version": "1.0.0",
-  "description": "mkdzplugin",
+  "description": "mkdzplugin-fe",
   "author": "dinglingjuan <dingdada09@163.com>",
   "private": true,
   "scripts": {

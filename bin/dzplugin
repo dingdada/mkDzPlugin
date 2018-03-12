@@ -1,0 +1,8 @@
+#!/usr/bin/env node
+
+require('commander')
+    .version(require('../package').version)
+    .usage('<command> [options]')
+    .command('init', 'generate a new discuz plugin from a template')
+    .command('add', 'add a page or a modal')
+    .parse(process.argv)

@@ -8,7 +8,9 @@
 ####################################################
 
 # build前端文件
-. ./fe/build.sh
+cd fe
+. build.sh
+cd ../
 
 pluginname="_FILENAME_"
 pluginversion="1.0"
@@ -30,6 +32,7 @@ mkdir -p $outdir
 ################################
 cpfiles api conf *.php *.xml class table model template cron
 
+mkdir -p $outdir/fe
 cp -rf fe/dist/* $outdir/fe
 ################################
 cd $outdir

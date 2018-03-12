@@ -1,0 +1,32 @@
+{
+    "name": "mkdzplugin",
+    "version": "1.0.0",
+    "description": "A simple cli for scaffolding discuz plugin with react",
+    "preferGlobal": true,
+    "bin": {
+        "dzplugin": "bin/dzplugin",
+        "dzplugin-init": "bin/dzplugin-init",
+        "dzplugin-add": "bin/dzplugin-add"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/dingdada/mkDzPlugin.git"
+    },
+    "keywords": [
+        "discuz",
+        "plugin",
+        "cli",
+        "react"
+    ],
+    "author": "dinglingjuan",
+    "license": "MIT",
+    "scripts": {},
+    "dependencies": {
+        "chalk": "^2.3.2",
+        "commander": "^2.15.0",
+        "inquirer": "^5.1.0"
+    },
+    "engines": {
+        "node": ">=6.0.0"
+    }
+}
