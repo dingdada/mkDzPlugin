@@ -1,3 +1,26 @@
 #!/usr/bin/env node
 
 const program = require('commander');
+const path = require('path');
+const readMeta = require('read-metadata');
+
+program
+    .usage('<page-name> <config-path>')
+    .parse(process.argv);
+
+const pageName = program.args[0];
+const configPath = program.args[1];
+
+const config = readMeta.sync(getTemplatePath(configPath));
+
+console.log(config);
+
+config.columns.map((item, index) => ({key: item.key, title: item.title}));
+
+function getTemplatePath (templatePath) {
+    return path.isAbsolute(templatePath)
+    ? templatePath
+    : path.normalize(path.join(process.cwd(), templatePath));
+}
+
+

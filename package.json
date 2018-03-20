@@ -24,7 +24,8 @@
     "dependencies": {
         "chalk": "^2.3.2",
         "commander": "^2.15.0",
-        "inquirer": "^5.1.0"
+        "inquirer": "^5.1.0",
+        "read-metadata": "^1.0.0"
     },
     "engines": {
         "node": ">=6.0.0"
