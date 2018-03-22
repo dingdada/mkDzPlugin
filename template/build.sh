@@ -8,7 +8,7 @@
 ####################################################
 
 # build前端文件
-cd fe
+cd ./fe
 . build.sh
 cd ../
 
@@ -22,7 +22,7 @@ src="dist-$buildtime"
 function cpfiles()
 {
     for i in $@; do
-        cp -r dzplugin/$i $outdir
+        cp -r $i $outdir
     done
 }
 

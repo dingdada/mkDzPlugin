@@ -75,7 +75,7 @@ function run() {
         ['table/table_log.php', 'table/table_' + pluginName + '_log.php']
     ];
     files.forEach(item => {
-        fs.renameSync(path.resolve(pluginName, 'dzplugin', item[0]), path.resolve(pluginName, 'dzplugin', item[1]));
+        fs.renameSync(path.resolve(pluginName, item[0]), path.resolve(pluginName, item[1]));
     });
 
     // 用插件名替换文件中填充字符
@@ -83,7 +83,7 @@ function run() {
     const oldUpper = '_HEADFILENAME_';
 
     files.forEach(item => {
-        replaceStr(old, pluginName, path.resolve(pluginName, 'dzplugin', item[1]));
+        replaceStr(old, pluginName, path.resolve(pluginName, item[1]));
     });
 
     replaceStr(old, pluginName, path.resolve(pluginName, 'build.sh'));
@@ -93,7 +93,7 @@ function run() {
         'api/1/seccode.php', 'api/1/uc.php', 'api/1/admin.php', 'api/1/excel.php'
     ];
     bothNeedReplace.forEach(item => {
-        const filepath = path.resolve(pluginName, 'dzplugin', item);
+        const filepath = path.resolve(pluginName, item);
         replaceStr(old, pluginName, filepath);
         replaceStr(oldUpper, pluginName.toUpperCase(), filepath);
     });
@@ -110,7 +110,7 @@ function run() {
         "template/views/z_about.tpl"
     ];
     needReplace.forEach(item => {
-        const filepath = path.resolve(pluginName, 'dzplugin', item);
+        const filepath = path.resolve(pluginName, item);
         replaceStr(old, pluginName, filepath);
     });
 }

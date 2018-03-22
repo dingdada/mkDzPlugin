@@ -53,5 +53,21 @@ export default class _PAGENAME_ extends React.Component {
     }
 
     render() {
+        const columns = '__COLUMNS__';
+        return (
+            <div>
+                <CustomTable
+                    columns={columns}
+                    dataSource={this.state.list}
+                    total={this.state.total}
+                    limit={LIMIT}
+                    reload={this.reload}
+                    barOptions={null}
+                    rowKey='id'
+                    className='_PAGENAME_'
+                    current={this.state.current}
+                />
+            </div>
+        );
     }
 }

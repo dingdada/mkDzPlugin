@@ -3,19 +3,24 @@
 const program = require('commander');
 const path = require('path');
 const readMeta = require('read-metadata');
+const createdb = require('../lib/createdb').createdb;
+const addApi = require('../lib/addApi').addApi;
+const createPage = require('../lib/createPage').createPage;
 
 program
-    .usage('<page-name> <config-path>')
+    .usage('<plugin-name> <page-name> <config-path>')
     .parse(process.argv);
 
-const pageName = program.args[0];
-const configPath = program.args[1];
+const pluginName = program.args[0];
+const pageName = program.args[1];
+const configPath = program.args[2];
 
 const config = readMeta.sync(getTemplatePath(configPath));
 
-console.log(config);
+console.log(createdb(config));
+addApi(pageName, pluginName, config);
+console.log(JSON.stringify(createPage(pageName, config)));
 
-config.columns.map((item, index) => ({key: item.key, title: item.title}));
 
 function getTemplatePath (templatePath) {
     return path.isAbsolute(templatePath)
