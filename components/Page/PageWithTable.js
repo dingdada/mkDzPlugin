@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {post} from 'common/util/request';
-import {GET__PAGENAME_} from 'common/constants/api';
+import {GET__PAGENAME_, ADD__PAGENAME_, DELETE__PAGENAME_} from 'common/constants/api';
 
 import CustomTable from 'common/components/CustomTable';
 

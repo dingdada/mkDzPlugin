@@ -19,7 +19,7 @@ const config = readMeta.sync(getTemplatePath(configPath));
 
 console.log(createdb(config));
 addApi(pageName, pluginName, config);
-console.log(JSON.stringify(createPage(pageName, config)));
+createPage(pageName, config);
 
 
 function getTemplatePath (templatePath) {

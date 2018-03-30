@@ -107,7 +107,8 @@ function run() {
         "template/views/z_nav.tpl",
         "template/views/z_setting.tpl",
         "template/views/z_auth.tpl",
-        "template/views/z_about.tpl"
+        "template/views/z_about.tpl",
+        "fe/src/common/constants/api.js"
     ];
     needReplace.forEach(item => {
         const filepath = path.resolve(pluginName, item);
