@@ -8,8 +8,8 @@ const addApi = require('../lib/addApi').addApi;
 const createPage = require('../lib/createPage').createPage;
 
 program
-    .usage('<plugin-name> <page-name> <config-path>')
-    .parse(process.argv);
+	.usage('<plugin-name> <page-name> <config-path>')
+	.parse(process.argv);
 
 const pluginName = program.args[0];
 const pageName = program.args[1];
@@ -23,9 +23,9 @@ createPage(pageName, config);
 
 
 function getTemplatePath (templatePath) {
-    return path.isAbsolute(templatePath)
-    ? templatePath
-    : path.normalize(path.join(process.cwd(), templatePath));
+	return path.isAbsolute(templatePath)
+		? templatePath
+		: path.normalize(path.join(process.cwd(), templatePath));
 }
 
 

@@ -14,14 +14,14 @@ const path = require('path');
  * Usage
  */
 program
-    .usage('<plugin-name>');
+	.usage('<plugin-name>');
 
 program.on('--help', () => {
-    console.log('  Examples:');
-    console.log();
-    console.log(chalk.gray('    # create a new discuz plugin'));
-    console.log('    $ dzplugin init my-plugin');
-    console.log();
+	console.log('  Examples:');
+	console.log();
+	console.log(chalk.gray('    # create a new discuz plugin'));
+	console.log('    $ dzplugin init my-plugin');
+	console.log();
 });
 
 /**
@@ -29,96 +29,96 @@ program.on('--help', () => {
  */
 
 function help () {
-    program.parse(process.argv);
-    if (program.args.length < 1) {
-        return program.help();
-    }
+	program.parse(process.argv);
+	if (program.args.length < 1) {
+		return program.help();
+	}
 }
 help();
 
 const pluginName = program.args[0];
 
 if (fs.existsSync(pluginName)) {
-    inquirer.prompt([{
-        type: 'confirm',
-        message: 'Target directory exists. Continue?',
-        name: 'ok'
-    }]).then(answers => {
-        if (answers.ok) {
-            run();
-        }
-    }).catch(logger.fatal)
+	inquirer.prompt([{
+		type: 'confirm',
+		message: 'Target directory exists. Continue?',
+		name: 'ok'
+	}]).then(answers => {
+		if (answers.ok) {
+			run();
+		}
+	}).catch(logger.fatal)
 } else {
-    run();
+	run();
 }
 
 function run() {
-    // 若已经存在文件夹，删除所有内容；若无，创建新的文件夹
-    if (fs.existsSync(pluginName)) {
-        rmdirRecursive(pluginName);
-    }
-    fs.mkdirSync(pluginName);
+	// 若已经存在文件夹，删除所有内容；若无，创建新的文件夹
+	if (fs.existsSync(pluginName)) {
+		rmdirRecursive(pluginName);
+	}
+	fs.mkdirSync(pluginName);
 
-    // 拷贝文件
-    child_process.spawnSync('cp', ['-r', path.resolve(__filename, '../../template') + '/.', pluginName]);
+	// 拷贝文件
+	child_process.spawnSync('cp', ['-r', path.resolve(__filename, '../../template') + '/.', pluginName]);
 
-    // 替换文件名
-    const files = [
-        ['discuz_plugin.xml', 'discuz_plugin_' + pluginName + '.xml'],
-        ['datatool.inc.php', pluginName + '.inc.php'],
-        ['model/model_nav_setting.php', 'model/model_' + pluginName + '_nav_setting.php'],
-        ['model/model_seccode.php', 'model/model_' + pluginName + '_seccode.php'],
-        ['model/model_setting.php', 'model/model_' + pluginName + '_setting.php'],
-        ['model/model_uc.php', 'model/model_' + pluginName + '_uc.php'],
-        ['model/model_usergroup.php', 'model/model_' + pluginName + '_usergroup.php'],
-        ['table/table_auth.php', 'table/table_' + pluginName + '_auth.php'],
-        ['table/table_log.php', 'table/table_' + pluginName + '_log.php']
-    ];
-    files.forEach(item => {
-        fs.renameSync(path.resolve(pluginName, item[0]), path.resolve(pluginName, item[1]));
-    });
+	// 替换文件名
+	const files = [
+		['discuz_plugin.xml', 'discuz_plugin_' + pluginName + '.xml'],
+		['datatool.inc.php', pluginName + '.inc.php'],
+		['model/model_nav_setting.php', 'model/model_' + pluginName + '_nav_setting.php'],
+		['model/model_seccode.php', 'model/model_' + pluginName + '_seccode.php'],
+		['model/model_setting.php', 'model/model_' + pluginName + '_setting.php'],
+		['model/model_uc.php', 'model/model_' + pluginName + '_uc.php'],
+		['model/model_usergroup.php', 'model/model_' + pluginName + '_usergroup.php'],
+		['table/table_auth.php', 'table/table_' + pluginName + '_auth.php'],
+		['table/table_log.php', 'table/table_' + pluginName + '_log.php']
+	];
+	files.forEach(item => {
+		fs.renameSync(path.resolve(pluginName, item[0]), path.resolve(pluginName, item[1]));
+	});
 
-    // 用插件名替换文件中填充字符
-    const old = '_FILENAME_';
-    const oldUpper = '_HEADFILENAME_';
+	// 用插件名替换文件中填充字符
+	const old = '_FILENAME_';
+	const oldUpper = '_HEADFILENAME_';
 
-    files.forEach(item => {
-        replaceStr(old, pluginName, path.resolve(pluginName, item[1]));
-    });
+	files.forEach(item => {
+		replaceStr(old, pluginName, path.resolve(pluginName, item[1]));
+	});
 
-    replaceStr(old, pluginName, path.resolve(pluginName, 'build.sh'));
+	replaceStr(old, pluginName, path.resolve(pluginName, 'build.sh'));
 
-    const bothNeedReplace = [
-        'index.php',
-        'api/1/seccode.php', 'api/1/uc.php', 'api/1/admin.php', 'api/1/excel.php'
-    ];
-    bothNeedReplace.forEach(item => {
-        const filepath = path.resolve(pluginName, item);
-        replaceStr(old, pluginName, filepath);
-        replaceStr(oldUpper, pluginName.toUpperCase(), filepath);
-    });
+	const bothNeedReplace = [
+		'index.php',
+		'api/1/seccode.php', 'api/1/uc.php', 'api/1/admin.php', 'api/1/excel.php'
+	];
+	bothNeedReplace.forEach(item => {
+		const filepath = path.resolve(pluginName, item);
+		replaceStr(old, pluginName, filepath);
+		replaceStr(oldUpper, pluginName.toUpperCase(), filepath);
+	});
 
-    const needReplace = [
-        "plugin.inc.php","install.php","uninstall.php",
-        "check.php","upgrade.php",
-        "hook_mobile.class.php","hook_pc.class.php",
-        "z_nav.inc.php","z_setting.inc.php","z_auth.inc.php","z_about.inc.php",
-        "class/env.class.php","class/log.class.php","class/utils.class.php","class/validate.class.php",
-        "template/views/z_nav.tpl",
-        "template/views/z_setting.tpl",
-        "template/views/z_auth.tpl",
-        "template/views/z_about.tpl",
-        "fe/src/common/constants/api.js"
-    ];
-    needReplace.forEach(item => {
-        const filepath = path.resolve(pluginName, item);
-        replaceStr(old, pluginName, filepath);
-    });
+	const needReplace = [
+		'plugin.inc.php','install.php','uninstall.php',
+		'check.php','upgrade.php',
+		'hook_mobile.class.php','hook_pc.class.php',
+		'z_nav.inc.php','z_setting.inc.php','z_auth.inc.php','z_about.inc.php',
+		'class/env.class.php','class/log.class.php','class/utils.class.php','class/validate.class.php',
+		'template/views/z_nav.tpl',
+		'template/views/z_setting.tpl',
+		'template/views/z_auth.tpl',
+		'template/views/z_about.tpl',
+		'fe/src/common/constants/api.js'
+	];
+	needReplace.forEach(item => {
+		const filepath = path.resolve(pluginName, item);
+		replaceStr(old, pluginName, filepath);
+	});
 }
 
 function replaceStr(oldString, newString, filepath) {
-    const replaceStr = 's/' + oldString + '/' + newString + '/g';
-    child_process.spawnSync('sed', ['-i', '', replaceStr, filepath]);
+	const replaceStr = 's/' + oldString + '/' + newString + '/g';
+	child_process.spawnSync('sed', ['-i', '', replaceStr, filepath]);
 }
 
 
